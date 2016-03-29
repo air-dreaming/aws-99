@@ -3,10 +3,11 @@
 import tornado.httpserver
 import tornado.ioloop
 import tornado.web
-
+import tornado.options
+from tornado.options import define, options
 from api import list
 # config: port definition
-port = 8882
+define("port", default=8000, help="run on the given port", type=int)
 
 # main for testing
 class MainHandler(tornado.web.RequestHandler):
@@ -30,7 +31,8 @@ def make_app():
 def main():
     app = make_app()
     server = tornado.httpserver.HTTPServer(app)
-    server.bind(port)
+    tornado.options.parse_command_line()
+    server.bind(options.port)
     server.start(0)
     tornado.ioloop.IOLoop.current().start()
 

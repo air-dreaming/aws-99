@@ -67,7 +67,7 @@ class UserCreateHandler(BaseUserHandler):
                         "data":{"code":200, "user": {"id": user_id, "name": self.name, "address": self.address}}
                     }
                 )
-            except err.IntergrityError as e:
+            except err.IntegrityError as e:
                 if e.code == ER.DUP_ENTRY:
                     self.make.make_reserror_json(400, "user exist already!")
                 else: 
@@ -107,6 +107,7 @@ class UserExistHandler(BaseUserHandler):
                         "data":{"code":200, "message": "user exist"}
                         })
             except Exception as e:
+                print(e)
                 self.make_internalerror()
         else:
             self.make_badrequest()
