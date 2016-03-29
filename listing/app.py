@@ -26,7 +26,6 @@ def make_app():
         (r"/api/listingpriceupdate/", list.ListingPriceUpdateHandler),
         (r"/api/listingall/", list.ListingAllHandler),
         ])
-
 # 
 def main():
     app = make_app()

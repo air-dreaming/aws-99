@@ -225,30 +225,33 @@ class ListingAllHandler(BaseListingHandler):
 
 class ListingByPostalCodeHandler(BaseListingHandler):
     @gen.coroutine
-    def get(self):
-        try:
-            sqlString = "SELECT `id`, `user`, `price`, `listing_type`,  `postal_code`, `status` FROM `table_listing`"
-            if "postalCodeList" in self.jsonBody:
+    def post(self):
+        if not ("postalCodeList" in self.jsonBody) or len(self.jsonBody["postalCodeList"]) == 0:
+            self.make_badrequest()
+        else:
+            try:
+                sqlString = "SELECT `id`, `user`, `price`, `listing_type`,  `postal_code`, `status` FROM `table_listing`"
                 filterString = ""
-                if len(self.jsonBody["postalCodeList"]) > 0:
+                objectList = []
+                if "postalCodeList" in self.jsonBody:
                     for item in self.jsonBody["postalCodeList"]:
                         filterString += item + ","
-                    if len(filterString) >0:
-                        filterString = filterString[:len(filterString) -1]
-                filterString = " WHERE `postal_code` in (" + filterString + ")"
-            sqlString += filterString
+                    filterString = filterString[:len(filterString) -1]
+                    filterString = " WHERE `postal_code` in (" + filterString + ")"
+                
+                sqlString += filterString
+                print(sqlString)
 
-            cur = yield db.connPool().execute(sqlString)
-            result = cur.fetchall()
-            objectList = []
-            for row in result:
-                objectList.append(row)
-            objects = json.dumps(objectList)
-            self.write({
-                "status": "sucess",
-                "data": {"code": 200, "message":"", "listings": objects}
-            })
-        except Exception as e:
-            print(e)
-            self.make_internalerror()
-   
+                cur = yield db.connPool().execute(sqlString)
+                result = cur.fetchall()
+                for row in result:
+                    objectList.append(row)
+                objects = json.dumps(objectList)
+                self.write({
+                    "status": "sucess",
+                    "data": {"code": 200, "message":"", "listings": objects}
+                })
+            except Exception as e:
+                print(e)
+                self.make_internalerror()
+       

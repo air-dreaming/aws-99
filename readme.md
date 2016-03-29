@@ -26,32 +26,32 @@ user rest api:
     [url]: http://domain:port/api/usercreate/
     [json]: {"name":"string", "address":"string"}
     [result]: {"status": "success", "data": {"code": 200, "user": {"address": "address", "id": 18, "name": "name"}}}
-    [cmd]: curl -H "Content-Type: application/json" -X POST -d '{"name":"name","address":"address"}' http://domain:port/api/usercreate/
+    [cmd]: curl -H "Content-Type: application/json" -X POST -d '[json]' [url]
 
  2. user info by id or by name
     [url]: http://domain:port/api/userinfo/
     [json]: {"id":id} / {"name":"name"}
     [result]: {"status": "success", "data": {"code": 200, "message":""}
-    [cmd]: curl -H "Content-Type: application/json" -X POST -d '{"id":20}' http://domain:port/api/userinfo/
+    [cmd]: curl -H "Content-Type: application/json" -X POST -d '[json]' [url]
 
 3. update user info by id
     [url]: http://domain:port/api/userupdate/
     [json]: {"id":id, "address":"string"}
     [result]: {"status": "success", "data": {"code": 200, "message":""}
-    [cmd]: curl -H "Content-Type: application/json" -X POST -d '{"id":20, "address":"string"}' http://domain:port/api/userupdate/
+    [cmd]: curl -H "Content-Type: application/json" -X POST -d '[json]' [url]
 
 
 4. delete user by id
     [url]: http://domain:port/api/userdelete/
     [json]: {"id":id}
     [result]: {"status": "success", "data": {"code": 200, "message":""}
-    [cmd]: curl -H "Content-Type: application/json" -X POST -d '{"id":20}' http://domain:port/api/userdelete/
+    [cmd]: curl -H "Content-Type: application/json" -X POST -d '[json]' [url]
 
 
 listing rest api:
 
 1. listing create
-    [url]: http://domain:port/api/listcreate/
+    [url]: http://domain:port/api/listingcreate/
     [json]: {"user": 1, "price": 110, "listingType": 2, "postalCode": "123456", "status": 1}
     [result]: {"status": "success", "data": {"code": 200, "listing": {"status": 1, "listingType": 2, "price": "110.0", "user": 1, "postalCode": "123456", "id": 14}}}
     [cmd]: curl -H "Content-Type: application/json" -X POST -d '[json]' [url]
@@ -63,7 +63,7 @@ listing rest api:
     [cmd]: curl -H "Content-Type: application/json" -X POST -d '[json]' [url]
 
 3. listing by index postalcode
-    [url]: http://domain:port/api/listingpriceupdate/
+    [url]: http://domain:port/api/listingbypostalcode/
     [json]: {"postalCode":""}
     [result]: {"status": "success", "data": {"code": 200, listings":[{},{}]}
     [cmd]: curl -H "Content-Type: application/json" -X POST -d '[json]' [url]
