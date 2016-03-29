@@ -28,9 +28,9 @@ def make_app():
 
 # 
 def main():
+    tornado.options.parse_command_line()
     app = make_app()
     server = tornado.httpserver.HTTPServer(app)
-    tornado.options.parse_command_line()
     server.bind(options.port)
     server.start(0)
     tornado.ioloop.IOLoop.current().start()

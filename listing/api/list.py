@@ -91,7 +91,7 @@ class BaseListingHandler(tornado.web.RequestHandler):
         try:
             postData = {"id": id}
             jsonData = json.dumps(postData)
-            response = yield AsyncHTTPClient().fetch("http://localhost:8881/api/userexist/", method='POST', headers=None, body=jsonData)
+            response = yield AsyncHTTPClient().fetch("http://172.31.23.200:8881/api/userexist/", method='POST', headers=None, body=jsonData)
         except:
             raise gen.Return(False)
         raise gen.Return(response.code == 200)
@@ -116,7 +116,7 @@ class ListingCreateHandler(BaseListingHandler):
                     id = cur.lastrowid
                     self.write({
                             "status":"success",
-                            "data":{"code":200, "user": {"id": id, "user": self.user, "price": str(self.price), "listingType": self.listingType,
+                            "data":{"code":200, "listing": {"id": id, "user": self.user, "price": str(self.price), "listingType": self.listingType,
                                 "postalCode": self.postalCode, "status": self.status}}
                         }
                     )

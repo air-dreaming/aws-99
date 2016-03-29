@@ -68,10 +68,7 @@ class UserCreateHandler(BaseUserHandler):
                     }
                 )
             except err.IntegrityError as e:
-                if e.code == ER.DUP_ENTRY:
-                    self.make.make_reserror_json(400, "user exist already!")
-                else: 
-                    raise e
+                self.make_reserror_json(400, "user exist already!")
             except:
                 self.make_internalerror()
                 raise
